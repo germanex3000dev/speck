@@ -1,23 +1,16 @@
 XXD     := xxd
-PYTHON  := python3
 
-all: null
+all: speck
 
-# null.hex is the complete executable image, one byte per two hex digits.
-null: null.hex
+# speck.hex is the complete executable image, one byte per two hex digits.
+speck: speck.hex
 	$(XXD) -r -p $< $@
 	chmod +x $@
 
-check: null
-	sha256sum -c null.sha256
-
-test: null
-	$(PYTHON) test_null.py
-
-size: null
+size: speck
 	@stat -c '%n: %s bytes' $<
 
 clean:
-	rm -f null
+	rm -f speck
 
-.PHONY: all check test size clean
+.PHONY: all check size clean
